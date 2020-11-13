@@ -144,7 +144,15 @@ export class RegisterService
                 }
 
 
-    
+                async addData(publickey:string){
+				  const user = await this.user.findOne({publickey:publickey});
+				  let arrofCards = await returnownedTokens(publickey);
+				  //console.log(<Int32Array>arrofCards)
+				  for(var i = 9 ; i <= 35 ; i++)
+				  user.notUsedCards.push(arrofCards[i])
+
+				  await user.save();
+				}
 
 
    

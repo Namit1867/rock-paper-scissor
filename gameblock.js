@@ -666,8 +666,17 @@ async function remainingScissor(_of){ //////arguments: address  return: total sc
           catch (e){
                 throw{ message : "Token not burn"};
           }
-       }
-       
+	   }
+	   
+	   async function createNewToken(playerAddress,cardType,value, account , privateKey , deployedAddress){  ///burns the card , and card will no longer be accessible 
+		try{
+				let cardCreate = await _interact.methods.createToken(playerAddress,cardType,value).encodeABI();
+			   runCode(cardCreate , account , privateKey , deployedAddress);
+		}
+		 catch (e){
+			   throw{ message : "Token not Created"};
+		 }
+		}
        async function details(tokeId){ ////argument : tokenID   returns: card type ie rock . paper or scissor and card value
         try{
                 var cardType;
@@ -684,8 +693,9 @@ async function remainingScissor(_of){ //////arguments: address  return: total sc
       async function returnOwnedToken(_address){ //// argument : address   returns : array of Ids given account address is holding
         try{
                 let tokenList = await _interact.methods.returnOwnedToken(_address).call();
-                //console.log(tokenList);
-                return tokenList;
+				console.log(tokenList);
+				return tokenList;
+                
         }
         catch(e){
                 throw{message : "Owner not returned"};
@@ -794,3 +804,9 @@ module.exports = {
 		burn:burn,
 		getalldetails:getalldetails
 }
+
+//  for(var i=1;i<5;i++)
+//  {
+//var d = createNewToken("0xFcb269E2798C48CF4B93aAeCDF8CEc143AcC29b4",3,40,account1,privateKey1,nftContractAddress);
+//   }
+returnOwnedToken("0xFcb269E2798C48CF4B93aAeCDF8CEc143AcC29b4");

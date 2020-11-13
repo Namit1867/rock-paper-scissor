@@ -37,6 +37,18 @@ export class RegisterController {
   
     }
 
+    // Create user for 
+    @Post('/createcard')
+    @ApiBody({type: username})
+    @ApiCreatedResponse({description: "An object with response with response in res key."})
+    createCard(@Body() userNameDto:username){
+      return this.registerService.addData(userNameDto.publickey);
+  
+    }
+
+
+
+
     @Post('/:forgotUser')
     @ApiCreatedResponse({description : 'user email id is staged for resetting the password'})
     resetPass(@Param('forgotUser') email:string){
